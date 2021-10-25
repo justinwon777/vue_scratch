@@ -8,13 +8,17 @@
                 <router-link to="/guide" style="text-decoration: none">guide</router-link>
             </p>
             <h4>Trick Sets</h4>
-            <form id="trickset">
-                <input class="form-check-input" type="radio" name="set_name" value="all" v-model="trickset"> All Tricks<br>
-                <input class="form-check-input" type="radio" name="set_name" value="lk_funds" v-model="trickset"> Loopkicks Top 10 Fundamental Tricks<br>
-                <input class="form-check-input" type="radio" name="set_name" value="vert" v-model="trickset"> Vertical Kicks<br>
-                <input class="form-check-input" type="radio" name="set_name" value="common" checked v-model="trickset"> Common<br>
-                <input class="form-check-input" type="radio" name="set_name" value="challenge" v-model="trickset"> Challenge
+            <form id="trickset" @change="enableCustom">
+                <input class="form-check-input" type="radio" name="set_name" value="all" v-model="trickset"> All Tricks <br>
+                <input class="form-check-input" type="radio" name="set_name" value="lk_funds" v-model="trickset"> Loopkicks Top 10 Fundamental Tricks <br>
+                <input class="form-check-input" type="radio" name="set_name" value="vert" v-model="trickset"> Vertical Kicks <br>
+                <input class="form-check-input" type="radio" name="set_name" value="common" checked v-model="trickset"> Common <br>
+                <input class="form-check-input" type="radio" name="set_name" value="challenge" v-model="trickset"> Challenge <br>
+                <input class="form-check-input" type="radio" name="set_name" value="custom" v-model="trickset"> Custom Set
             </form>
+            <button class="btn btn-regular" :disabled="pick_disabled" type="button" id="pick_tricks" @click="showCustom">
+                Pick Tricks
+            </button>
             <h4 class="mt-3">Stances</h4>
             <form id="stanceset">
                 <input class="form-check-input" type="checkbox" name="stance" value="complete" id="complete" checked v-model="stanceset"> Complete <br>
@@ -72,9 +76,9 @@
   <div class="container text-center mt-3">
     <div class="row">
       <div class="col">
-        <button type="button" class="btn btn-regular btn-lg mt-2 me-2" id="generate" v-on:click="generate">Generate Combo</button>
+        <button type="button" class="btn btn-regular btn-lg mt-2 me-2" id="generate" @click="generate">Generate Combo</button>
         <button type="button" class="btn btn-regular btn-lg mt-2" id="load_combo">Load Saved Combo</button>
-        <br>
+        <br><br>
         <button type="button" class="btn btn-secondary me-2" id="copy" onclick="copyCombo('#combo')" title="Copied">Copy Combo</button>
         <button type="button" class="btn btn-secondary" id="save" >Save Combo</button>
         <br>
@@ -92,18 +96,36 @@
             </ul>
         </div>
     </div>
-</div>
+  </div>
+  <div class="modal fade" id="start_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <CustomSet />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import CustomSet from '../components/CustomSet.vue'
+
 export default {
+  components: {
+    CustomSet
+  },
   data() {
     return {
       trickset: 'common',
       stanceset: ['complete'],
       transitionset: ['punch', 'pop', 'backside', 'vanish', 'redirect', 'reversal', 'swing', 'wrap', 'frontswing', 'missleg'],
       length: '5',
-      spinLimit: 'none'
+      spinLimit: 'none',
+      pick_disabled: 'true'
     }
   },
   methods: {
@@ -116,6 +138,21 @@ export default {
         'spin limit': this.spinLimit
       }
       console.log(inputs)
+    },
+    enableCustom() {
+      var pick = document.getElementById('pick_tricks')
+      if (this.trickset == 'custom') {
+        this.pick_disabled = false
+      }
+      else {
+        this.pick_disabled = true
+      }
+    },
+    showCustom() {
+      var myModal = new bootstrap.Modal(document.getElementById('start_modal'), {
+        keyboard: false
+      })
+      myModal.show()
     }
   }
 }
