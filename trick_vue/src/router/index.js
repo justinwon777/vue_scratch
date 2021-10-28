@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Guide from '../views/Guide.vue'
-// import Builder from '../views/Builder.vue'
+import Builder from '../views/Builderr.vue'
 
 const routes = [
   {
@@ -20,11 +20,11 @@ const routes = [
     name: 'Guide',
     component: Guide
   },
-  // {
-  //   path: '/builder',
-  //   name: 'Builder',
-  //   component: Builder
-  // }
+  {
+    path: '/builder',
+    name: 'Builder',
+    component: Builder
+  }
 ]
 
 const router = createRouter({

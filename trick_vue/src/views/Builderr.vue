@@ -1,5 +1,5 @@
 <template>
-  <h1>builder</h1>
+  <h1>Builder</h1>
 </template>
 
 <script>

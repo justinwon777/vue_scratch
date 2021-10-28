@@ -7,9 +7,9 @@
             </button>
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav mt-2">
-                    <!-- <li class="nav-item">
+                    <li class="nav-item">
                         <router-link to="/builder" class="nav-link">Combo Builder</router-link>
-                    </li> -->
+                    </li>
                     <li class="nav-item">
                         <router-link to="/guide" class="nav-link">Guide</router-link>
                     </li>
